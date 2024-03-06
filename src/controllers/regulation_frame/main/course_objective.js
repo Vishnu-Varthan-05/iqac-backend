@@ -44,7 +44,7 @@ exports.update_course_objective = (req, res) => {
 };
 
 exports.delete_course_objective = (req, res) => {
-    const id  = req.body;
+    const {id}  = req.body;
     if (!id) {
         res.status(400).json({
             error: "ID is required",

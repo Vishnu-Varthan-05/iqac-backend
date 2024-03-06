@@ -90,7 +90,7 @@ exports.update_course = (req, res) => {
 };
 
 exports.delete_course = (req, res) => {
-    const id = req.body;
+    const {id} = req.body;
     if (!id) {
         res.status(400).json({
             error: "Field 'id' is required",

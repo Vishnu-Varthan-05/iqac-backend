@@ -32,7 +32,7 @@ exports.update_branch = (req, res) => {
 };
 
 exports.delete_branch = (req, res) => {
-    const id = req.body;
+    const {id} = req.body;
     if (!id) {
         res.status(400).json({
             error: "ID is required",

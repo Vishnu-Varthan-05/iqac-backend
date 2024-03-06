@@ -34,7 +34,7 @@ exports.update_degree =(req, res) =>{
 }
 
 exports.delete_degree = (req, res)=>{
-    const id = req.id
+    const {id} = req.id
     if(!id){
         res.status(400).json({
             error:"ID is required"

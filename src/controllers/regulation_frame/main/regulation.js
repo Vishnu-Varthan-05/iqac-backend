@@ -1,7 +1,7 @@
 const { post_query_database } = require("../../../config/database_utils");
 
 exports.post_regulation = (req, res) => {
-    const regulation = req.body;
+    const {regulation} = req.body;
     if (!regulation) {
         res.status(400).json({
             error: "Regulation is required",
@@ -32,7 +32,7 @@ exports.update_regulation = (req, res) => {
 };
 
 exports.delete_regulation = (req, res) => {
-    const id = req.body;
+    const {id} = req.body;
     if (!id) {
         res.status(400).json({
             error: "Id is required",

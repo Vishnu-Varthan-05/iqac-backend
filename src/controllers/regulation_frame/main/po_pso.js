@@ -46,7 +46,7 @@ exports.update_po_pso = (req, res) => {
 };
 
 exports.delete_po_pso = (req, res) => {
-    const id = req.body;
+    const {id} = req.body;
     if (!id) {
         res.status(400).json({
             error: "ID is required",
