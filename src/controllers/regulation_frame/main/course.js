@@ -1,4 +1,4 @@
-const { post_query_database } = require("../../../config/database_utils");
+/*const { post_query_database } = require("../../../config/database_utils");
 
 exports.post_course = (req, res) => {
     const {
@@ -104,4 +104,175 @@ exports.delete_course = (req, res) => {
     const success_message = "Course Deleted successfully";
 
     post_query_database(query, res, error_message, success_message);
+};
+*/
+
+
+
+
+// The Codes given below are written b y using promisses and async/await
+
+
+
+
+
+const { post_query_database } = require("../../../config/database_utils");
+
+exports.post_course = async (req, res) => {
+    const {
+        branch,
+        semester,
+        code,
+        name,
+        lecture_hours,
+        tutorial_hours,
+        practical_hours,
+        credit,
+        hours_per_week,
+        ca,
+        es,
+        total,
+        category,
+    } = req.body;
+    if (
+        !branch ||
+        !semester ||
+        !code ||
+        !name ||
+        !lecture_hours ||
+        !tutorial_hours ||
+        !practical_hours ||
+        !credit ||
+        !hours_per_week ||
+        !ca ||
+        !es ||
+        !total ||
+        !category
+    ) {
+        return res.status(400).json({
+            error: "Fields 'branch', 'semester', 'code', 'name', 'lecture_hours', 'tutorial_hours', 'practical_hours', 'credit', 'hours_per_week', 'ca', 'es', 'total', and 'category' are required",
+        });
+    }
+
+    try {
+        
+        const query = `
+            INSERT INTO master_courses(branch, semester, code, name, lecture_hours, tutorial_hours, practical_hours, credit, hours_per_week, ca, es, total, category, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '1')
+        `;
+        const values = [
+            branch,
+            semester,
+            code,
+            name,
+            lecture_hours,
+            tutorial_hours,
+            practical_hours,
+            credit,
+            hours_per_week,
+            ca,
+            es,
+            total,
+            category
+        ];
+        const success_message =  await post_query_database(query, values);
+
+        res.status(200).json({ message: success_message });
+    } catch (error) {
+        console.error("Error adding course:", error);
+        res.status(500).json({ error:  "Error adding course"});
+    }
+};
+
+exports.update_course = async (req, res) => {
+    const {
+        id,
+        branch,
+        semester,
+        code,
+        name,
+        lecture_hours,
+        tutorial_hours,
+        practical_hours,
+        credit,
+        hours_per_week,
+        ca,
+        es,
+        total,
+        category,
+    } = req.body;
+    if (
+        !id ||
+        !branch ||
+        !semester ||
+        !code ||
+        !name ||
+        !lecture_hours ||
+        !tutorial_hours ||
+        !practical_hours ||
+        !credit ||
+        !hours_per_week ||
+        !ca ||
+        !es ||
+        !total ||
+        !category
+    ) {
+        return res.status(400).json({
+            error: "Fields 'id', 'branch', 'semester', 'code', 'name', 'lecture_hours', 'tutorial_hours', 'practical_hours', 'credit', 'hours_per_week', 'ca', 'es', 'total', and 'category' are required",
+        });
+    }
+    try {
+    
+        const query = `
+            UPDATE master_courses
+            SET branch = ?, semester = ?, code = ?, name = ?, lecture_hours = ?, tutorial_hours = ?, practical_hours = ?, credit = ?, hours_per_week = ?, ca = ?, es = ?, total = ?, category = ?
+            WHERE id = ?
+        `;
+        const values = [
+            branch,
+            semester,
+            code,
+            name,
+            lecture_hours,
+            tutorial_hours,
+            practical_hours,
+            credit,
+            hours_per_week,
+            ca,
+            es,
+            total,
+            category,
+            id
+        ];
+        const success_message =  await post_query_database(query, values);
+
+        res.status(200).json({ message: success_message });
+    } catch (error) {
+        console.error("Error updating course:", error);
+        res.status(500).json({ error: "Error updating course" });
+    }
+};
+
+exports.delete_course = async (req, res) => {
+    const { id } = req.body;
+        if (!id) {
+            return res.status(400).json({
+                error: "Field 'id' is required",
+            });
+        }
+
+    try {
+        const query = `
+            UPDATE master_courses
+            SET status = '0'
+            WHERE id = ?
+        `;
+        const values = [id];
+        const success_message = await post_query_database(query, values);
+
+        res.status(200).json({ message: success_message });
+    } catch (error) {
+        console.error("Error deleting course:", error);
+        res.status(500).json({ error: "Error deleting course" });
+    }
 };

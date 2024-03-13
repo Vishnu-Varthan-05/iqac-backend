@@ -1,30 +1,21 @@
-const db = require("./database");
+const pool = require('./database');
 
-function get_query_database(query, response, error_message) {
-    db.query(query, (err, results) => {
-        if (err) {
-            response.status(500).send(error_message);
-            console.error(error_message + ":", err);
-            return;
-        }
-        response.json(results);
-    });
+async function get_query_database(query, params) {
+  try {
+    const [results] = await pool.promise().query(query, params);
+    return results;
+  } catch (err) {
+    throw new Error(`Error executing query: ${query}. ${err.message}`);
+  }
 }
 
-function post_query_database(
-    query,
-    response,
-    error_message,
-    success_message = "Posted data Successfully"
-) {
-    db.query(query, (err, results) => {
-        if (err) {
-            response.status(500).send(error_message);
-            console.error(error_message + ":", err);
-            return;
-        }
-        response.json(success_message);
-    });
+async function post_query_database(query, params, success_message = "Posted data Successfully") {
+  try {
+    const [results] = await pool.promise().query(query, params);
+    return success_message;
+  } catch (err) {
+    throw new Error(`Error executing query: ${query}. ${err.message}`);
+  }
 }
 
 module.exports = { get_query_database, post_query_database };

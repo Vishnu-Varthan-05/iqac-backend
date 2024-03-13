@@ -2,11 +2,11 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const body_parser = require("body-parser")
 
 //routes
 const regulation_frame_routes = require("./routes/regulation_frame/regulation_frame");
 const course_faculty_mapping_routes = require("./routes/course_faculty_mapping/course_faculty_mapping");
+const course_excemption_routes = require("./routes/course_excemption/course_excemption")
 
 //middleware logger config
 const morgan_config = morgan(
@@ -19,11 +19,12 @@ const port = 5000;
 // Enable CORS AND LOGGER MIDDLEWARE
 app.use(cors());
 app.use(morgan_config);
-app.use(body_parser.json())
+app.use(express.json())
 
 app.use("/api/rf", regulation_frame_routes);
 app.use("/api/cfm", course_faculty_mapping_routes);
-
+app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
+app.use("/api/ce", course_excemption_routes)
 // Start server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
