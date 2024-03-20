@@ -75,7 +75,7 @@ exports.post_degree = async (req, res) => {
             INSERT INTO master_degree(regulation, degree, status)
             VALUES (?, ?, '1')
         `;
-        const success_message = await post_query_database(query, [regulation],[degree]);
+        const success_message = await post_query_database(query, [regulation,degree]);
 
         res.status(200).json({ message: success_message });
     } catch (error) {
@@ -97,7 +97,7 @@ exports.update_degree = async (req, res) => {
             SET regulation = ?, degree = ?
             WHERE id = ?
         `;
-        const success_message = await post_query_database(query, [regulation],[degree],[id]);
+        const success_message = await post_query_database(query, [regulation,degree,id]);
 
         res.status(200).json({ message: success_message });
     } catch (error) {

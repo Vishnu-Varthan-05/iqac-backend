@@ -105,7 +105,7 @@ exports.post_po_pso = async (req, res) => {
             INSERT INTO outcome(type, code_name, description, status)
             VALUES(?, ?, ?, '1')
         `;
-        const success_message = await post_query_database(query, [type],[code_name],[description]);
+        const success_message = await post_query_database(query, [type,code_name,description]);
 
         res.status(200).json({ message: success_message });
     } catch (error) {
@@ -128,7 +128,7 @@ exports.update_po_pso = async (req, res) => {
             SET type = ?, code_name = ?, description = ?
             WHERE id = ?
         `;
-        const success_message = await post_query_database(query, [type],[code_name],[description],[id]);
+        const success_message = await post_query_database(query, [type,code_name,description,id]);
 
         res.status(200).json({ message: success_message });
     } catch (error) {

@@ -97,7 +97,7 @@ exports.update_regulation = async (req, res) => {
             SET regulation = ?
             WHERE id = ?
         `;
-        const success_message =  await post_query_database(query, [regulation],[id]);
+        const success_message =  await post_query_database(query, [regulation,id]);
 
         res.status(200).json({ message: success_message });
     } catch (error) {

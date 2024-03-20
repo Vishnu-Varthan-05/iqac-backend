@@ -73,7 +73,7 @@ exports.post_branch = async (req, res) => {
             INSERT INTO master_branch(degree, branch, status)
             VALUES (?, ?, '1')
         `;
-        const success_message = await post_query_database(query, [degree],[branch]);
+        const success_message = await post_query_database(query, [degree,branch]);
   
         res.status(200).json({ message: success_message });
     } catch (error) {
@@ -95,7 +95,7 @@ exports.update_branch = async (req, res) => {
             SET degree = ?, branch = ?
             WHERE id = ?
         `;
-        const success_message = await post_query_database(query, [degree],[branch],[id]);
+        const success_message = await post_query_database(query, [degree,branch,id]);
 
         res.status(200).json({ message: success_message });
     } catch (error) {

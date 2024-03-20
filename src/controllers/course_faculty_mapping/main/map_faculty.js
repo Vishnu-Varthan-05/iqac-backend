@@ -164,7 +164,7 @@ exports.update_faculty_mapping = async (req, res) => {
             SET year = ?, faculty = ?, course = ?
             WHERE id = ?
         `;
-        const success_message = await post_query_database(query, [academic_year],[faculty_id],[course_id],[mapping_id]);
+        const success_message = await post_query_database(query, [academic_year,faculty_id,course_id,mapping_id]);
 
         res.status(200).json({ success: success_message });
     } catch (error) {

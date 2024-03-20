@@ -108,7 +108,7 @@ exports.post_course_objective = async (req, res) => {
             INSERT INTO course_objective(course, co_obj_id, description, status)
             VALUES (?, ?, ?, '1')
         `;
-        const success_message = await post_query_database(query, [course],[co_obj_id],[description]);
+        const success_message = await post_query_database(query, [course,co_obj_id,description]);
 
         res.status(200).json({ message: success_message });
     } catch (error) {
@@ -130,7 +130,7 @@ exports.update_course_objective = async (req, res) => {
             SET course = ?, co_obj_id = ?, description = ?
             WHERE id = ?
         `;
-        const success_message = await post_query_database(query, [course],[co_obj_id],[description],[id]);
+        const success_message = await post_query_database(query, [course,co_obj_id,description,id]);
 
         res.status(200).json({ message: success_message });
     } catch (error) {

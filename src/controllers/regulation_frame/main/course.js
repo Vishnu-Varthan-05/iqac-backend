@@ -267,8 +267,7 @@ exports.delete_course = async (req, res) => {
             SET status = '0'
             WHERE id = ?
         `;
-        const values = [id];
-        const success_message = await post_query_database(query, values);
+        const success_message = await post_query_database(query, [id]);
 
         res.status(200).json({ message: success_message });
     } catch (error) {
